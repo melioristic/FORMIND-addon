@@ -1,0 +1,3 @@
+Water module: All units per year and not per timestep! Soil_Water ist the soil water content at the end of the timestep. 
+Time [a1]	Soil water content [mm1]	Precipitation [mm1 a-1]	Interception [mm1 a-1]	Run-off above-ground [mm1 a-1]	Run-off below-ground [mm1 a-1]	Total run-off [mm1 a-1]	Transpiration [mm1 a-1]	Permanent wilting point [mm1]	MSW [mm1]	Potential evapotranspiration [mm1 a-1]	water reduction factor [-]
+Time	Soil_Water	Precipitation	Interception	Run-Off-above-ground	Run-Off-below-ground	Total-Run-Off	Transpiration	PWP	MSW	PET	RW
