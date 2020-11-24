@@ -58,11 +58,30 @@ def plot_climate_cflux(cflux_path: str, climate_path: str, plot_path:str=".")-> 
     nee_extend = np.full_like(time_climate, np.nan)
     nee_extend[diff:] = nee
 
-    ax1.plot(time_climate, av_irradiance)
+    ax1.plot(time_climate, av_irradiance, color = "darkorange")
+    ax1.set_xlim(left = time_climate[0], right = time_climate[-1])
+    ax1.set_ylabel("Solar Irradiance [$\mu mol$ $s^{-1}$ $m^{-2}$]")
+    
     # ax2.plot(time_climate, av_pet)
-    ax3.plot(time_climate, av_temp)
-    ax4.plot(time_climate, av_rain)
-    ax5.plot(time_climate, nee_extend)
+    ax3.plot(time_climate, av_temp, color = "indianred")
+    ax3.set_xlim(left = time_climate[0], right = time_climate[-1])
+    ax3.set_ylabel(u'Temperature $[\u00B0C]$')
+    
+
+    ax4.bar(time_climate, av_rain, color = "mediumblue")
+    ax4.set_xlim(left = time_climate[0], right = time_climate[-1])
+    ax4.set_ylabel("Precipitation [$mm$ $d^{-1}$]")
+
+    ax5.plot(time_climate, nee_extend, color = "k")
+    nee_positive = np.where(nee_extend<0, 0, nee_extend)
+    nee_negative = np.where(nee_extend>0, 0, nee_extend)
+    ax5.fill_between(time_climate, nee_positive, color = "slateblue")
+    ax5.fill_between(time_climate, nee_negative, color = "lightcoral")
+    ax5.axhline(color = "k", linestyle = "--")
+    ax5.set_ylabel("NEE [$t_C$ $ha^{-1}$ $a^{-1}$]")
+    ax5.set_xlabel("Time [Years]")
+    ax5.set_xlim(left = time_climate[0], right = time_climate[-1])
+    plt.tight_layout()
     plt.show()    
     return cflux
 
@@ -78,7 +97,6 @@ def read_climate(climate_path: str)->pd.DataFrame:
 	""" 
 
     climate = pd.read_csv(climate_path, delimiter="\t", skiprows=1, header=None)
-    print(climate.values[0,0])
     climate.columns = ["rain[mm]","temperature[C]","irradiance[mumol/s/m2]","day_length[h]","PET[mm]"]    
     
     return climate
