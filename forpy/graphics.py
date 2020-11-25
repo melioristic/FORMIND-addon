@@ -47,7 +47,7 @@ def plot_climate_cflux(nee_arr: np.array, climate_data: np.array, time: np.array
     ax4.set_xlim(left = time[0], right = time[-1])
     ax4.set_ylabel("Precipitation [$mm$ $d^{-1}$]")
 
-    ax5.plot(time, nee_arr, color = "k")
+    ax5.plot(time, np.mean(nee_arr, axis =1), color = "k")
     #nee_positive = np.where(nee_extend<0, 0, nee_extend)
     #nee_negative = np.where(nee_extend>0, 0, nee_extend)
     # ax5.fill_between(time, nee_positive, color = "slateblue")
@@ -165,5 +165,5 @@ climate_file = "formind_parameters/Climate/KiLi.climate.txt"
 cflux_path = project_path+cflux_file
 climate_path = project_path+climate_file
 
-nee_arr, data_climate, time = prep_climate_cflux(cflux_path, climate_path)
+nee_arr, data_climate, time = prep_climate_cflux(cflux_path, climate_path, 30)
 plot_climate_cflux(nee_arr, data_climate, time)
