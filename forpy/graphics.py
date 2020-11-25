@@ -13,7 +13,9 @@
 import pandas as pd
 import matplotlib.pylab as plt
 import numpy as np
-def plot_climate_cflux(cflux_path: str, climate_path: str, plot_path:str=".")-> None:
+from typing import Tuple
+
+def plot_climate_cflux(nee_arr: np.array, climate_data: np.array, time: np.array, plot_path:str=".")-> None:
     """The function plots the carbon flux with climatological data
     Args:
     	cflux_path (str): The path to cflux ouput file.
@@ -24,67 +26,75 @@ def plot_climate_cflux(cflux_path: str, climate_path: str, plot_path:str=".")-> 
 		None: And plots in the specified folder
 	"""
 
-    cflux = pd.read_csv(cflux_path, delimiter="\t", skiprows=2)    
-    time = cflux["Time"].values
-    nee = cflux["NEE"].values
-    
-    # Read the climate file
-    climate = read_climate(climate_path)
-    
-    rain = climate["rain[mm]"].values
-    temp = climate["temperature[C]"].values
-    irradiance = climate["irradiance[mumol/s/m2]"].values
-    daylength = climate["day_length[h]"].values
-    pet = climate["PET[mm]"].values
-
-    av_rain = _average_annualy(rain)
-    av_temp = _average_annualy(temp)
-    av_irradiance = _average_annualy(irradiance)
-    # av_daylength = _average_annualy(daylength)
-    # av_pet = _average_annualy(pet)
-
-    time_climate = np.zeros_like(av_rain)
-    diff = time_climate.shape[0] - time.shape[0]
-
-    av_rain = _average_annualy(rain)
-
-    time_climate[diff:] = time[:]
-    time_climate[:diff] = np.arange(-diff,0)
-   
+    av_rain = climate_data[0,:]
+    av_temp = climate_data[0,:]
+    av_irradiance = climate_data[0,:]
     #fig, (ax1, ax2, ax3, ax4, ax5) = plt.subplots(5,1, figsize=(12,8))
     
     fig, (ax1, ax3, ax4, ax5) = plt.subplots(4,1, figsize=(16,10))
 
-    nee_extend = np.full_like(time_climate, np.nan)
-    nee_extend[diff:] = nee
-
-    ax1.plot(time_climate, av_irradiance, color = "darkorange")
-    ax1.set_xlim(left = time_climate[0], right = time_climate[-1])
+    ax1.plot(time, av_irradiance, color = "darkorange")
+    ax1.set_xlim(left = time[0], right = time[-1])
     ax1.set_ylabel("Solar Irradiance [$\mu mol$ $s^{-1}$ $m^{-2}$]")
     
-    # ax2.plot(time_climate, av_pet)
-    ax3.plot(time_climate, av_temp, color = "indianred")
-    ax3.set_xlim(left = time_climate[0], right = time_climate[-1])
+    # ax2.plot(time, av_pet)
+    ax3.plot(time, av_temp, color = "indianred")
+    ax3.set_xlim(left = time[0], right = time[-1])
     ax3.set_ylabel(u'Temperature $[\u00B0C]$')
     
 
-    ax4.bar(time_climate, av_rain, color = "mediumblue")
-    ax4.set_xlim(left = time_climate[0], right = time_climate[-1])
+    ax4.bar(time, av_rain, color = "mediumblue")
+    ax4.set_xlim(left = time[0], right = time[-1])
     ax4.set_ylabel("Precipitation [$mm$ $d^{-1}$]")
 
-    ax5.plot(time_climate, nee_extend, color = "k")
-    nee_positive = np.where(nee_extend<0, 0, nee_extend)
-    nee_negative = np.where(nee_extend>0, 0, nee_extend)
-    ax5.fill_between(time_climate, nee_positive, color = "slateblue")
-    ax5.fill_between(time_climate, nee_negative, color = "lightcoral")
+    ax5.plot(time, nee_arr, color = "k")
+    #nee_positive = np.where(nee_extend<0, 0, nee_extend)
+    #nee_negative = np.where(nee_extend>0, 0, nee_extend)
+    # ax5.fill_between(time, nee_positive, color = "slateblue")
+    # ax5.fill_between(time, nee_negative, color = "lightcoral")
     ax5.axhline(color = "k", linestyle = "--")
     ax5.set_ylabel("NEE [$t_C$ $ha^{-1}$ $a^{-1}$]")
     ax5.set_xlabel("Time [Years]")
-    ax5.set_xlim(left = time_climate[0], right = time_climate[-1])
+    ax5.set_xlim(left = time[0], right = time[-1])
     plt.tight_layout()
     plt.show()    
-    return cflux
+    return 
 
+
+def prep_climate_cflux(cflux_path: str, climate_path: str, num_sim:int = 10) -> Tuple :
+    """  The function prepares climate and cflux data for plotting
+    Args:
+    	cflux_path (str): The path to cflux ouput file.
+		climate_path (str): The path to climate data input file.
+    	num_sim (int): Number of cflux simulatiions
+        
+	Returns:
+		Tuple: Tuple of np.array containing climate and cflux data
+	"""
+    
+    cflux_file = cflux_path.split(".")[0]+"_"+str(1)+"."+cflux_path.split(".")[1]
+    cflux = pd.read_csv(cflux_file, delimiter="\t", skiprows=2)    
+    time = cflux["Time"].values
+    nee = cflux["NEE"].values
+    print(cflux["NEE"].values[10])
+    nee_arr = np.zeros((num_sim,nee.shape[0]))
+    nee_arr[0,:] = nee
+    for i in range(2,num_sim+1):
+        cflux_file = cflux_path.split(".")[0]+"_"+str(i)+"."+cflux_path.split(".")[1]
+        cflux = pd.read_csv(cflux_file, delimiter="\t", skiprows=2)    
+        nee_arr[i-1,:] = cflux["NEE"].values    
+        print(cflux["NEE"].values[10])
+        del cflux
+    
+    # Read the climate file
+
+    time_climate = np.arange(-1,time.shape[0])
+    nee_extend = np.zeros((nee_arr.shape[0], time_climate.shape[0]))
+    nee_extend[:,1:] = nee_arr
+
+    data_climate = read_av_climate(climate_path)
+    
+    return nee_extend.T, data_climate[:,:time_climate.shape[0]], time_climate
 
 def read_climate(climate_path: str)->pd.DataFrame:
     """  The climate data is read from the txt file
@@ -101,6 +111,36 @@ def read_climate(climate_path: str)->pd.DataFrame:
     
     return climate
 
+def read_av_climate(climate_path: str) -> np.array:
+    """  The function averages the climatological variables from daily to yearly values.
+	
+    Args:
+		climate_path (str): The path to the climate text file
+
+	Returns:
+		np.array: Containing av_rain, av_temp, av_irradiance, av_day_length,   and av_PET 
+	Raises:
+		AttributeError: The ``Raises`` section is a list of all exceptions
+			that are relevant to the interface.
+	ValueError: If `param2` is equal to `param1`.
+	""" 
+
+    climate = read_climate(climate_path)
+    
+    rain = climate["rain[mm]"].values
+    temp = climate["temperature[C]"].values
+    irradiance = climate["irradiance[mumol/s/m2]"].values
+    daylength = climate["day_length[h]"].values
+    pet = climate["PET[mm]"].values
+
+    av_rain = _average_annualy(rain)
+    av_temp = _average_annualy(temp)
+    av_irradiance = _average_annualy(irradiance)
+    av_daylength = _average_annualy(daylength)
+    av_pet = _average_annualy(pet)
+
+    return np.array([av_rain, av_temp, av_irradiance, av_daylength, av_pet])
+    
 def _average_annualy(data:np.array)->np.array:
     
     """ Annual average values is calculated from daily values.
@@ -119,10 +159,11 @@ def _average_annualy(data:np.array)->np.array:
     return data_avg
 
 project_path = "Projects/Project_Tansania_Kilimanjaro/"
-cflux_file = "results/KiLi_FLM3_PFT6_2.cflux"
+cflux_file = "results/KiLi_FLM3_PFT6.cflux"
 climate_file = "formind_parameters/Climate/KiLi.climate.txt"
 
 cflux_path = project_path+cflux_file
 climate_path = project_path+climate_file
 
-plot_climate_cflux(cflux_path, climate_path)
+nee_arr, data_climate, time = prep_climate_cflux(cflux_path, climate_path)
+plot_climate_cflux(nee_arr, data_climate, time)
