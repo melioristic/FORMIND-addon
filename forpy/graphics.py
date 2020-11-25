@@ -119,7 +119,7 @@ def _average_annualy(data:np.array)->np.array:
     return data_avg
 
 project_path = "Projects/Project_Tansania_Kilimanjaro/"
-cflux_file = "results/KiLi_FLM3_PFT6.cflux"
+cflux_file = "results/KiLi_FLM3_PFT6_2.cflux"
 climate_file = "formind_parameters/Climate/KiLi.climate.txt"
 
 cflux_path = project_path+cflux_file

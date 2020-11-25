@@ -13,11 +13,11 @@ set olddir=%CD%
 
 cd ..\bin
 
-Formind-full.exe %olddir%\formind_parameters\KiLi_FLM3_PFT6_1.par 1> %olddir%\stout.txt 2> %olddir%\sterr.txt
+Formind-full.exe %olddir%\formind_parameters\KiLi_FLM3_PFT6.par 1> %olddir%\stout.txt 2> %olddir%\sterr.txt
 
 echo.
 echo %var3%.
 echo.    
 echo ################################
 
-Pause
+rem pause
