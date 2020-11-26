@@ -27,8 +27,8 @@ def plot_climate_cflux(nee_arr: np.array, climate_data: np.array, time: np.array
 	"""
 
     av_rain = climate_data[0,:]
-    av_temp = climate_data[0,:]
-    av_irradiance = climate_data[0,:]
+    av_temp = climate_data[1,:]
+    av_irradiance = climate_data[2,:]
     #fig, (ax1, ax2, ax3, ax4, ax5) = plt.subplots(5,1, figsize=(12,8))
     
     fig, (ax1, ax3, ax4, ax5) = plt.subplots(4,1, figsize=(16,10))
@@ -47,7 +47,9 @@ def plot_climate_cflux(nee_arr: np.array, climate_data: np.array, time: np.array
     ax4.set_xlim(left = time[0], right = time[-1])
     ax4.set_ylabel("Precipitation [$mm$ $d^{-1}$]")
 
+    ax5.plot(time, nee_arr, color = "lightblue")
     ax5.plot(time, np.mean(nee_arr, axis =1), color = "k")
+    
     #nee_positive = np.where(nee_extend<0, 0, nee_extend)
     #nee_negative = np.where(nee_extend>0, 0, nee_extend)
     # ax5.fill_between(time, nee_positive, color = "slateblue")
@@ -76,15 +78,12 @@ def prep_climate_cflux(cflux_path: str, climate_path: str, num_sim:int = 10) -> 
     cflux = pd.read_csv(cflux_file, delimiter="\t", skiprows=2)    
     time = cflux["Time"].values
     nee = cflux["NEE"].values
-    print(cflux["NEE"].values[10])
     nee_arr = np.zeros((num_sim,nee.shape[0]))
     nee_arr[0,:] = nee
     for i in range(2,num_sim+1):
         cflux_file = cflux_path.split(".")[0]+"_"+str(i)+"."+cflux_path.split(".")[1]
         cflux = pd.read_csv(cflux_file, delimiter="\t", skiprows=2)    
         nee_arr[i-1,:] = cflux["NEE"].values    
-        print(cflux["NEE"].values[10])
-        del cflux
     
     # Read the climate file
 
