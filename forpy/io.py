@@ -50,7 +50,12 @@ def read_climate_file(file_name: str, path: str) :
 
 path  = "projects/Project_Tansania_Kilimanjaro/formind_parameters/Climate/"
 read_file_name = "KiLi.climate.txt"
-write_file_name = "KiLi.climate_ori_.txt"
+write_file_name = "KiLi.climate_1_.txt"
 
 df = read_climate_file(read_file_name, path)
-write_climate_file(write_file_name, path, pddf = df)
+
+nparray = df.values
+
+nparray[100000:101000,0] = 0
+
+write_climate_file(write_file_name, path, nparray = nparray)
