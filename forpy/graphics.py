@@ -73,7 +73,7 @@ def prep_climate_cflux(cflux_path: str, climate_path: str, num_sim:int = 10) -> 
 	Returns:
 		Tuple: Tuple of np.array containing climate and cflux data
 	"""
-    strt_after = 35
+    strt_after = 49
     cflux_file = cflux_path.split(".")[0]+"_"+str(strt_after+1)+"."+cflux_path.split(".")[1]
     cflux = pd.read_csv(cflux_file, delimiter="\t", skiprows=2)    
     time = cflux["Time"].values
@@ -84,7 +84,7 @@ def prep_climate_cflux(cflux_path: str, climate_path: str, num_sim:int = 10) -> 
         cflux_file = cflux_path.split(".")[0]+"_"+str(i)+"."+cflux_path.split(".")[1]
         cflux = pd.read_csv(cflux_file, delimiter="\t", skiprows=2)    
         nee_arr[i-1-strt_after,:] = cflux["NEE"].values    
-    
+        print(cflux_file)
     # Read the climate file
 
     time_climate = np.arange(-1,time.shape[0])
@@ -159,10 +159,10 @@ def _average_annualy(data:np.array)->np.array:
 
 project_path = "Projects/Project_Tansania_Kilimanjaro/"
 cflux_file = "results/KiLi_FLM3_PFT6.cflux"
-climate_file = "formind_parameters/Climate/KiLi.climate.txt"
+climate_file = "formind_parameters/Climate/KiLi.climate_1.txt"
 
 cflux_path = project_path+cflux_file
 climate_path = project_path+climate_file
 
-nee_arr, data_climate, time = prep_climate_cflux(cflux_path, climate_path, 5)
+nee_arr, data_climate, time = prep_climate_cflux(cflux_path, climate_path, 6)
 plot_climate_cflux(nee_arr, data_climate, time)
