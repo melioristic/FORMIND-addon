@@ -73,7 +73,7 @@ def prep_climate_cflux(cflux_path: str, climate_path: str, num_sim:int = 10) -> 
 	Returns:
 		Tuple: Tuple of np.array containing climate and cflux data
 	"""
-    strt_after = 49
+    strt_after = 55
     cflux_file = cflux_path.split(".")[0]+"_"+str(strt_after+1)+"."+cflux_path.split(".")[1]
     cflux = pd.read_csv(cflux_file, delimiter="\t", skiprows=2)    
     time = cflux["Time"].values
@@ -164,5 +164,5 @@ climate_file = "formind_parameters/Climate/KiLi.climate_1.txt"
 cflux_path = project_path+cflux_file
 climate_path = project_path+climate_file
 
-nee_arr, data_climate, time = prep_climate_cflux(cflux_path, climate_path, 6)
+nee_arr, data_climate, time = prep_climate_cflux(cflux_path, climate_path, 5)
 plot_climate_cflux(nee_arr, data_climate, time)
