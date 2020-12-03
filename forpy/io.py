@@ -57,6 +57,6 @@ df = read_climate_file(read_file_name, path)
 
 nparray = df.values
 
-nparray[100000:105000,0] = 1
+nparray[100000:105000,0] = 3
 
 write_climate_file(write_file_name, path, nparray = nparray)
