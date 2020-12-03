@@ -1,4 +1,4 @@
-rain[mm]	 temperature[°C]	 irradiance[mümol/s/m2]	 day_length[h]	 PET[mm]	co2[ppm]
+rain[mm]	 temperature[ï¿½C]	 irradiance[mï¿½mol/s/m2]	 day_length[h]	 PET[mm]	co2[ppm]
 8.4	24.4	1098.6	12	4.5	400
 9.1	23.5	1417.4	12	4.4	400
 15.9	27	1210.5	12	4.7	400

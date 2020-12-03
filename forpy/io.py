@@ -18,7 +18,7 @@ def write_climate_file(file_name: str, path: str, **kwargs) -> None:
         if key=="nparray":
             nparray = val
             df = pd.DataFrame(nparray, columns=[
-                      "rain[mm]", "temperature[�C]", "irradiance[m�mol/s/m2]", "day_length[h]",	"PET[mm]"])
+                      "rain[mm]", "temperature[�C]", "irradiance[m�mol/s/m2]", "day_length[h]",	"PET[mm]", "co2[ppm]"])
             df.to_csv(path+file_name, index=False, sep= "\t")
 
         elif key == "pddf":
@@ -48,11 +48,12 @@ def read_climate_file(file_name: str, path: str) :
 
 
 
-path  = "projects/Project_Tansania_Kilimanjaro/formind_parameters/Climate/"
-read_file_name = "KiLi.climate.txt"
-write_file_name = "KiLi.climate_1.txt"
+path  = "projects/Project_Madagascar_Betampona/formind_parameters/Climate/"
+read_file_name = "climate_3000_24_400.txt"
+write_file_name = "climate_400.txt"
 
 df = read_climate_file(read_file_name, path)
+
 
 nparray = df.values
 
