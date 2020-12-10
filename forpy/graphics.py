@@ -73,7 +73,7 @@ def prep_climate_cflux(cflux_path: str, climate_path: str, num_sim:int = 10) -> 
 	Returns:
 		Tuple: Tuple of np.array containing climate and cflux data
 	"""
-    strt_after = 20
+    strt_after = 25
     cflux_file = cflux_path.split(".")[0]+"_"+str(strt_after+1)+"."+cflux_path.split(".")[1]
     cflux = pd.read_csv(cflux_file, delimiter="\t", skiprows=2)    
     time = cflux["Time"].values
