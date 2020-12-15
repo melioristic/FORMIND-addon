@@ -73,17 +73,19 @@ def prep_climate_cflux(cflux_path: str, climate_path: str, num_sim:int = 10) -> 
 	Returns:
 		Tuple: Tuple of np.array containing climate and cflux data
 	"""
-    strt_after = 25
-    cflux_file = cflux_path.split(".")[0]+"_"+str(strt_after+1)+"."+cflux_path.split(".")[1]
+
+    ## We need to fix this line
+    cflux_file = '.'.join(cflux_path.split(".")[:2])+'_'+"00"+"."+cflux_path.split(".")[2]
+    print(cflux_file)
     cflux = pd.read_csv(cflux_file, delimiter="\t", skiprows=2)    
     time = cflux["Time"].values
     nee = cflux["NEE"].values
     nee_arr = np.zeros((num_sim,nee.shape[0]))
     nee_arr[0,:] = nee
-    for i in range(strt_after+2,strt_after+num_sim+1):
-        cflux_file = cflux_path.split(".")[0]+"_"+str(i)+"."+cflux_path.split(".")[1]
+    for i in range(1,num_sim):
+        cflux_file = '.'.join(cflux_path.split(".")[:2])+'_'+str(i).zfill(2)+"."+cflux_path.split(".")[2]
         cflux = pd.read_csv(cflux_file, delimiter="\t", skiprows=2)    
-        nee_arr[i-1-strt_after,:] = cflux["NEE"].values    
+        nee_arr[i,:] = cflux["NEE"].values    
         print(cflux_file)
     # Read the climate file
 
@@ -157,12 +159,3 @@ def _average_annualy(data:np.array)->np.array:
 
     return data_avg
 
-project_path = "Projects/Project_Madagascar_Betampona/"
-cflux_file = "results/madagascar.cflux"
-climate_file = "formind_parameters/Climate/climate_400.txt"
-
-cflux_path = project_path+cflux_file
-climate_path = project_path+climate_file
-
-nee_arr, data_climate, time = prep_climate_cflux(cflux_path, climate_path, 5)
-plot_climate_cflux(nee_arr, data_climate, time)

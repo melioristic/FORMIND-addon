@@ -30,7 +30,6 @@ def write_climate_file(file_name: str, path: str, **kwargs) -> None:
 
     return
 
-
 def read_climate_file(file_name: str, path: str) :
     
     """[summary]
@@ -45,18 +44,3 @@ def read_climate_file(file_name: str, path: str) :
                 
     df = pd.read_csv(path+file_name, delimiter="\t")
     return df
-
-
-
-path  = "projects/Project_Madagascar_Betampona/formind_parameters/Climate/"
-read_file_name = "climate_3000_24_400.txt"
-write_file_name = "climate_400.txt"
-
-df = read_climate_file(read_file_name, path)
-
-
-nparray = df.values
-
-nparray[100000:105000,0] = 3
-
-write_climate_file(write_file_name, path, nparray = nparray)

@@ -1,0 +1,25 @@
+=================== Start Simulation=======================
+              time now: Tue Dec 15 11:46:46 2020
+======================= Switches =============================
+Closed boundary conditions:           1
+Regional seed ingrowth:               1
+Local seed dispersal by mother trees: 0
+Pulsed ingrowth of seeds:             0
+Density regulation of seeds:          0
+Treefalling & damages:                1
+No growth of trees:                   0
+Space limitation:                     1
+Background tree mortality:            1
+Diameter-dependent tree mortality:    0
+Diameter-increment-dependent tree mortality: 1
+================== Simulation Info ========================
+ Time step:                           1
+ Time end:                            400
+ Time step of output:                 1
+ Threshold diameter for output:       0.1
+ Light climate: vertical discretisation [m]: 0.5
+ Simulated area [hectare]:            16
+ Number of plots per hectare:         25
+ Stochasticity:                       ON. Seed: 1608029206
+=============== Simulation Successful =====================
+Runtime: 53.1796 seconds

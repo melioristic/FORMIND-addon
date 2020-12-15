@@ -16,7 +16,7 @@ comment ========================================================================
 string	ProjectName	"Madagascar"
 	\d project name shown in GUI
 	
-float   TimeEnd         150.0
+float   TimeEnd         400.0
     \u years
     \d End of simulation time.
 	
@@ -121,7 +121,7 @@ comment ========================================================================
 comment ----------------      Flags            --------------------------------------
 comment =============================================================================
 
-int	N_Par.random_seed_ON	0
+int	N_Par.random_seed_ON	1
 	\u -
 	\r 0:1
 	\d Flag for activating stochasticity (0: reproducible / 1: NOT reproducible)
@@ -634,7 +634,7 @@ array	N_Par.Climate_File
 	typeOfArray	string
 	dimension	1
 data 
-	climate_150y.txt	
+	fractional-change_DID_frac_0.5_climate_400y.txt
 end
 
 	
