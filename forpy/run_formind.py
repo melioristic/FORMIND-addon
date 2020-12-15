@@ -35,10 +35,12 @@ class Formind(object):
 			copyfile(par_file_path_ori, par_file_path_new)
 			run_command = './'+self.model_path+'formind '+par_file_path_new
 			output_command = '1>'+ouput_path+'stout_'+str(i).zfill(2)+'.txt'
-			error_command = '1>'+ouput_path+'sterr_'+str(i).zfill(2)+'.txt'
+			error_command = '2>'+ouput_path+'sterr_'+str(i).zfill(2)+'.txt'
 			command = run_command+' '+output_command+' '+error_command
+			print(command)
 			os.system(command)
-			os.remove(par_file_path_new)
+			#os.remove(par_file_path_new)
+			
 		print(f'Simulation completed for {sim_id} scenario')
 
 	def generate_scenario_climate(self, climate_file:str, scenario:str, **kwargs):

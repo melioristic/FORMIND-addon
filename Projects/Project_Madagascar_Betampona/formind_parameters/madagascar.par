@@ -634,7 +634,7 @@ array	N_Par.Climate_File
 	typeOfArray	string
 	dimension	1
 data 
-	percentage-change_DUU_perc_80_climate_400y.txt
+	xyz.txt
 end
 
 	

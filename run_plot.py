@@ -9,5 +9,5 @@ cflux_path = project_path+'results/'+cflux_file
 
 climate_path = project_path+'formind_parameters/Climate/'+climate_file
 
-nee_arr, data_climate, time = prep_climate_cflux(cflux_path, climate_path, 2)
+nee_arr, data_climate, time = prep_climate_cflux(cflux_path, climate_path, 10)
 plot_climate_cflux(nee_arr, data_climate, time)

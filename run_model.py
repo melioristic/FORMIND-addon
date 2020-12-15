@@ -3,7 +3,7 @@ from forpy import Formind
 model_path = ''	
 par_file_name='madagascar'
 project_path='Projects/Project_Madagascar_Betampona/'
-num_sim = 10
+num_sim = 1
 climate_file_ori = 'climate_400y.txt'
 
 
