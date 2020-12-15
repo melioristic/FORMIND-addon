@@ -75,7 +75,7 @@ def prep_climate_cflux(cflux_path: str, climate_path: str, num_sim:int = 10) -> 
 	"""
 
     ## We need to fix this line
-    cflux_file = '.'.join(cflux_path.split(".")[:2])+'_'+"00"+"."+cflux_path.split(".")[2]
+    cflux_file = cflux_path.split('.')[0]+'_'+"00"+"."+cflux_path.split(".")[1]
     print(cflux_file)
     cflux = pd.read_csv(cflux_file, delimiter="\t", skiprows=2)    
     time = cflux["Time"].values
@@ -83,7 +83,7 @@ def prep_climate_cflux(cflux_path: str, climate_path: str, num_sim:int = 10) -> 
     nee_arr = np.zeros((num_sim,nee.shape[0]))
     nee_arr[0,:] = nee
     for i in range(1,num_sim):
-        cflux_file = '.'.join(cflux_path.split(".")[:2])+'_'+str(i).zfill(2)+"."+cflux_path.split(".")[2]
+        cflux_file = cflux_path.split('.')[0]+'_'+str(i).zfill(2)+"."+cflux_path.split(".")[1]
         cflux = pd.read_csv(cflux_file, delimiter="\t", skiprows=2)    
         nee_arr[i,:] = cflux["NEE"].values    
         print(cflux_file)

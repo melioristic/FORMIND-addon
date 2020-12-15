@@ -9,10 +9,9 @@ climate_file_ori = 'climate_400y.txt'
 
 
 
-scenario = 'fractional-change'
-climate_file = 'fractional-change_DID_frac_0.8_climate_400y.txt'
-sim_id = '_'.join(climate_file.split('_')[:4])
-
+scenario = 'percentage-change'
+climate_file = 'percentage-change_DUU_perc_80_climate_400y.txt'
+sim_id = climate_file.split('.')[0]
 model = Formind(model_path, project_path, par_file_name)
-# model.generate_scenario_climate(climate_file_ori, scenario, frac=0.8)
+#model.generate_scenario_climate(climate_file_ori, scenario, perc=80)
 model.run(sim_id=sim_id, num_sim=num_sim)

@@ -43,12 +43,12 @@ class Formind(object):
 
 	def generate_scenario_climate(self, climate_file:str, scenario:str, **kwargs):
 		self.scenario = scenario
-		if scenario=="fractional-change":
-			frac = kwargs['frac']
+		if scenario=="percentage-change":
+			perc = kwargs['perc']
 			scenario_dict = {
-				'I':1+frac, # Increase
+				'I':1+perc/100, # Increase
 				'U': 1,	# Usual
-				'D':1-frac, # Decrease
+				'D':1-perc/100, # Decrease
 			}
 		else:
 			pass
@@ -75,7 +75,7 @@ class Formind(object):
 			key = key_list[i]
 			data[100000:105001,0:3] = val_arr* data[100000:105001,0:3]
 
-			write_file_name = scenario+'_'+''.join(key)+'_frac_'+str(frac)+'_climate_400y.txt'
+			write_file_name = scenario+'_'+''.join(key)+'_perc_'+str(perc)+'_climate_400y.txt'
 
 			write_climate_file(write_file_name, climate_file_path, nparray = data)
 
