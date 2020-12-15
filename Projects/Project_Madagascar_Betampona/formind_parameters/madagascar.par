@@ -55,7 +55,7 @@ int Switch.MortThreshold    100
     \r 0:10000
     \d Threshold for stochastic/deterministic mortality calculation
 	
-int Switch.Ha	10
+int Switch.Ha	4
     \u sqrt(ha)
     \r 1:7
     \d Squareroot of number of hectars which should be simulated
@@ -634,7 +634,7 @@ array	N_Par.Climate_File
 	typeOfArray	string
 	dimension	1
 data 
-	fractional-change_DID_frac_0.5_climate_400y.txt
+	fractional-change_DID_frac_0.8_climate_400y.txt
 end
 
 	
@@ -696,12 +696,12 @@ comment +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 comment +++++ N_Par.Temperature_Reduction_Algorithm = "norm_4" +++++
 
 float	N_Par.Temperature_opt	28.0
-	\u °C
+	\u ï¿½C
 	\r -10:10
 	\d optimum temperature for photosynthesis 
 
 float	N_Par.Temperature_sig	12.0
-	\u °C
+	\u ï¿½C
 	\r 0:45
 	\d standard deviation for temperature reduction for photosynthesis 
 
@@ -710,12 +710,12 @@ comment +++++++++++++++++++++++++++++++++
 comment +++++ respiration reduction +++++
 
 float	N_Par.Temperature_Q10	2.5
-	\u °C
+	\u ï¿½C
 	\r 0:1
 	\d Short-term respiration response to temperature
 
 float	N_Par.Temperature_reference	25.0
-	\u °C
+	\u ï¿½C
 	\r 0:1
 	\d Reference temperature
 	
@@ -734,7 +734,7 @@ data
 end
 
 array N_Par.ref_Irradiance 
-	\u [mümol photon/sec m²]
+	\u [mï¿½mol photon/sec mï¿½]
 	\r 0:1500
 	\d ref irradiance in every time step
 	typeOfArray	float
@@ -760,7 +760,7 @@ comment ========================================================================
 array N_Par.Water_WUE
 	\u [g TS/kg H2O]
 	\r 0:50
-	\d water use efficiency for transpiration (Larcher 2001 ökophysiologie der Pflanzen (5. Auflage))
+	\d water use efficiency for transpiration (Larcher 2001 ï¿½kophysiologie der Pflanzen (5. Auflage))
 	typeOfArray float
 	dimension	12
 data
