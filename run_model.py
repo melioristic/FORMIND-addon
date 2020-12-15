@@ -13,5 +13,5 @@ scenario = 'percentage-change'
 climate_file = 'percentage-change_DUU_perc_80_climate_400y.txt'
 sim_id = climate_file.split('.')[0]
 model = Formind(model_path, project_path, par_file_name)
-#model.generate_scenario_climate(climate_file_ori, scenario, perc=80)
-model.run(sim_id=sim_id, num_sim=num_sim)
+model.generate_scenario_climate(climate_file_ori, scenario, perc=30)
+#model.run(sim_id=sim_id, num_sim=num_sim)
