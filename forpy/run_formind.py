@@ -36,7 +36,8 @@ class Formind(object):
 			run_command = './'+self.model_path+'formind '+par_file_path_new
 			output_command = '1>'+ouput_path+'stout_'+str(i).zfill(2)+'.txt'
 			error_command = '1>'+ouput_path+'sterr_'+str(i).zfill(2)+'.txt'
-			os.system(run_command+' '+output_command+' '+error_command)
+			command = run_command+' '+output_command+' '+error_command
+			os.system(command)
 			os.remove(par_file_path_new)
 		print(f'Simulation completed for {sim_id} scenario')
 
