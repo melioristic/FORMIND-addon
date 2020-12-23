@@ -11,7 +11,7 @@
 import os
 from shutil import copyfile
 import numpy as np
-
+from tqdm import trange
 from forpy.io import read_climate_file, write_climate_file
 
 
@@ -28,18 +28,15 @@ class Formind(object):
 		par_file_path_ori = par_file_without_ext+par_file_ext
 	
 		ouput_path = self.project_path+'results/'
-	
-		for i in range(num_sim):
-			print(f'Running simulation {i+1} of {num_sim} for {sim_id} scenario')
+		for i in trange(num_sim):
 			par_file_path_new = par_file_without_ext+'_'+sim_id+'_'+str(i).zfill(2)+par_file_ext
 			copyfile(par_file_path_ori, par_file_path_new)
 			run_command = './'+self.model_path+'formind '+par_file_path_new
 			output_command = '1>'+ouput_path+'stout_'+str(i).zfill(2)+'.txt'
 			error_command = '2>'+ouput_path+'sterr_'+str(i).zfill(2)+'.txt'
 			command = run_command+' '+output_command+' '+error_command
-			print(command)
 			os.system(command)
-			#os.remove(par_file_path_new)
+			os.remove(par_file_path_new)
 			
 		print(f'Simulation completed for {sim_id} scenario')
 

@@ -55,7 +55,7 @@ int Switch.MortThreshold    100
     \r 0:10000
     \d Threshold for stochastic/deterministic mortality calculation
 	
-int Switch.Ha	4
+int Switch.Ha	10
     \u sqrt(ha)
     \r 1:7
     \d Squareroot of number of hectars which should be simulated

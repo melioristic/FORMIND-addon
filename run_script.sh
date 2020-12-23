@@ -6,4 +6,4 @@ module load Anaconda3
 
 source activate FORPY38
 
-python ~/github/FORMIND-addon/download_data.py
+python ~/github/FORMIND-addon/run_model.py
