@@ -29,7 +29,7 @@ def download_era5_land(var:str, year:int)->None:
         year (int): The year for which data needs to be downloaded
     """
 
-    _create_var_folder(var)
+    _create_var_folder(download_dir+var)
 
     c = cdsapi.Client()
 
@@ -73,9 +73,9 @@ def download_era5_land(var:str, year:int)->None:
             ],
             'variable': var,
         },
-        'data/'+var+'/'+var+'_'+str(year)+'.nc')
+        download_dir+var+'/'+var+'_'+str(year)+'.nc')
 
-def download_era5_met(var:str, year:int)-> None:
+def download_era5_met(var:str, year:int, download_dir:str)-> None:
     """[summary]
 
     Args:
@@ -89,7 +89,7 @@ def download_era5_met(var:str, year:int)-> None:
         year (int): The year for which the data needs to be downloaded and can range
             from 1979-2018
     """
-    _create_var_folder(var)
+    _create_var_folder(download_dir+var)
 
     c = cdsapi.Client()
 
@@ -107,9 +107,9 @@ def download_era5_met(var:str, year:int)-> None:
             ],
             'format': 'zip',
         },
-        'data/'+var+'/'+var+'_'+str(year)+'.zip')
+        download_dir+var+'/'+var+'_'+str(year)+'.zip')
 
-def download_era5_pressure(var:str, year:int)-> None:
+def download_era5_pressure(var:str, year:int, download_dir:str)-> None:
     """[summary]
 
     Args:
@@ -118,7 +118,7 @@ def download_era5_pressure(var:str, year:int)-> None:
         year (int): The year for which the data needs to be downloaded,
             can range from 1979-present
     """
-    _create_var_folder(var)
+    _create_var_folder(download_dir+var)
 
     c = cdsapi.Client()
 
@@ -164,9 +164,9 @@ def download_era5_pressure(var:str, year:int)-> None:
                 49.23,
             ],
         },
-        'data/'+var+'/'+var+'_'+str(year)+'.nc')
+        download_dir+var+'/'+var+'_'+str(year)+'.nc')
 
-def download_era5_single(var:str, year:int) -> None:
+def download_era5_single(var:str, year:int, download_dir: str) -> None:
     """The function downloads era5 single level dataset
 
     Args:
@@ -219,35 +219,17 @@ def download_era5_single(var:str, year:int) -> None:
             49.33,
         ],
     },
-    'data/'+var+'/'+var+'_'+str(year)+'.nc')
+    download_dir+var+'/'+var+'_'+str(year)+'.nc')
 
-def _create_var_folder(var:str):
+def _create_var_folder(directory:str):
     """The function creates a folder wth var name in data folder
 
     Args:
         var (str): The name of the folder
     """
     
-    directory = "data/"+var
     if not os.path.exists(directory):
         os.makedirs(directory)
     else:
         pass
 
-var_met = ['rainfall_flux',  
-            'near_surface_air_temperature', 
-            'near_surface_wind_speed', 
-            'rainfall_flux',
-            'surface_air_pressure', 
-            'surface_downwelling_shortwave_radiation']
-
-year = 1979
-
-var_pressure = 'relative_humidity'
-
-
-for var in var_met:
-    download_era5_met(var, year)
-
-
-#download_era5_pressure(var_pressure, year)
