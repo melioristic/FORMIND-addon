@@ -1,5 +1,5 @@
 =================== Start Simulation=======================
-              time now: Wed Dec 23 23:33:40 2020
+              time now: Thu Dec 24 01:22:24 2020
 ======================= Switches =============================
 Closed boundary conditions:           1
 Regional seed ingrowth:               1
@@ -18,8 +18,8 @@ Diameter-increment-dependent tree mortality: 1
  Time step of output:                 1
  Threshold diameter for output:       0.1
  Light climate: vertical discretisation [m]: 0.5
- Simulated area [hectare]:            1
+ Simulated area [hectare]:            100
  Number of plots per hectare:         25
- Stochasticity:                       ON. Seed: 1608762818
+ Stochasticity:                       ON. Seed: 1608769343
 =============== Simulation Successful =====================
-Runtime: 2.35544 seconds
+Runtime: 461.879 seconds

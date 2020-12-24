@@ -1,4 +1,1 @@
-Simulation area too large: please adjust MAXHA and maximal allowed Pointer calls!
-ERROR: variable error 	file: for_io.cpp	function: DistributePIN2Pointer	 line:4118	 Pointererror occured; not enough memory.
-ERROR: undefined error 	file: formind.cpp	function: InitComplete	 line:411	 Initialization error.
-error: initializing formind model!
+sh: .//home/anand/github/FORMIND-addon/formind: No such file or directory

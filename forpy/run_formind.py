@@ -31,7 +31,7 @@ class Formind(object):
 		for i in trange(num_sim):
 			par_file_path_new = par_file_without_ext+'_'+sim_id+'_'+str(i).zfill(2)+par_file_ext
 			copyfile(par_file_path_ori, par_file_path_new)
-			run_command = './'+self.model_path+'formind '+par_file_path_new
+			run_command = self.model_path+'formind '+par_file_path_new
 			output_command = '1>'+ouput_path+'stout_'+str(i).zfill(2)+'.txt'
 			error_command = '2>'+ouput_path+'sterr_'+str(i).zfill(2)+'.txt'
 			command = run_command+' '+output_command+' '+error_command
