@@ -6,3 +6,7 @@ data/
 
 ## Formind compiled for mac/linux
 formind
+
+## Dont upload plots
+
+plots

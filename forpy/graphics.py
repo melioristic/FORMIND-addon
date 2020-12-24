@@ -15,7 +15,7 @@ import matplotlib.pylab as plt
 import numpy as np
 from typing import Tuple
 
-def plot_climate_cflux(nee_arr: np.array, climate_data: np.array, time: np.array, plot_path:str=".")-> None:
+def plot_climate_cflux(nee_arr: np.array, gpp_arr: np.array, climate_data: np.array, time: np.array, plot_path:str=".")-> None:
     """The function plots the carbon flux with climatological data
     Args:
     	cflux_path (str): The path to cflux ouput file.
@@ -31,7 +31,7 @@ def plot_climate_cflux(nee_arr: np.array, climate_data: np.array, time: np.array
     av_irradiance = climate_data[2,:]
     #fig, (ax1, ax2, ax3, ax4, ax5) = plt.subplots(5,1, figsize=(12,8))
     
-    fig, (ax1, ax3, ax4, ax5) = plt.subplots(4,1, figsize=(16,10))
+    fig, (ax1, ax3, ax4, ax5, ax6) = plt.subplots(5,1, figsize=(16,10))
 
     ax1.plot(time, av_irradiance, color = "darkorange")
     ax1.set_xlim(left = time[0], right = time[-1])
@@ -49,6 +49,7 @@ def plot_climate_cflux(nee_arr: np.array, climate_data: np.array, time: np.array
 
     ax5.plot(time, nee_arr, color = "lightblue")
     ax5.plot(time, np.mean(nee_arr, axis =1), color = "k")
+
     
     #nee_positive = np.where(nee_extend<0, 0, nee_extend)
     #nee_negative = np.where(nee_extend>0, 0, nee_extend)
@@ -58,8 +59,22 @@ def plot_climate_cflux(nee_arr: np.array, climate_data: np.array, time: np.array
     ax5.set_ylabel("NEE [$t_C$ $ha^{-1}$ $a^{-1}$]")
     ax5.set_xlabel("Time [Years]")
     ax5.set_xlim(left = time[0], right = time[-1])
+    
+    # We are doing a custom hline here
+    x = 250
+    y = np.mean(np.mean(gpp_arr, axis=1)[x:])
+    ax6.plot(time, gpp_arr, color = "lightblue")
+    ax6.plot(time, np.mean(gpp_arr, axis =1), color = "k")
+    ax6.axhline(y=y,color = "k", linestyle = "--")
+    ax6.axvline(x=x,color = "k", linestyle = "--")
+    ax6.set_ylabel("GPP [$t_C$ $ha^{-1}$ $a^{-1}$]")
+    ax6.set_xlabel("Time [Years]")
+    ax6.set_xlim(left = time[0], right = time[-1])
+    
+    
     plt.tight_layout()
-    plt.show()    
+    plt.savefig(plot_path)
+
     return 
 
 
@@ -76,26 +91,32 @@ def prep_climate_cflux(cflux_path: str, climate_path: str, num_sim:int = 10) -> 
 
     ## We need to fix this line
     cflux_file = cflux_path.split('.')[0]+'_'+"00"+"."+cflux_path.split(".")[1]
-    print(cflux_file)
     cflux = pd.read_csv(cflux_file, delimiter="\t", skiprows=2)    
     time = cflux["Time"].values
     nee = cflux["NEE"].values
+    gpp = cflux["GPP"].values
     nee_arr = np.zeros((num_sim,nee.shape[0]))
+    gpp_arr = np.zeros((num_sim,gpp.shape[0]))
     nee_arr[0,:] = nee
+    gpp_arr[0,:] = gpp
     for i in range(1,num_sim):
         cflux_file = cflux_path.split('.')[0]+'_'+str(i).zfill(2)+"."+cflux_path.split(".")[1]
         cflux = pd.read_csv(cflux_file, delimiter="\t", skiprows=2)    
         nee_arr[i,:] = cflux["NEE"].values    
-        print(cflux_file)
+        gpp_arr[i,:] = cflux["GPP"].values    
+        
     # Read the climate file
 
     time_climate = np.arange(-1,time.shape[0])
     nee_extend = np.zeros((nee_arr.shape[0], time_climate.shape[0]))
+    gpp_extend = np.zeros((gpp_arr.shape[0], time_climate.shape[0]))
+    
     nee_extend[:,1:] = nee_arr
+    gpp_extend[:,1:] = gpp_arr
 
     data_climate = read_av_climate(climate_path)
     
-    return nee_extend.T, data_climate[:,:time_climate.shape[0]], time_climate
+    return nee_extend.T, gpp_extend.T, data_climate[:,:time_climate.shape[0]], time_climate
 
 def read_climate(climate_path: str)->pd.DataFrame:
     """  The climate data is read from the txt file

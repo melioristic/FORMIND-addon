@@ -21,3 +21,5 @@ Diameter-increment-dependent tree mortality: 1
  Simulated area [hectare]:            100
  Number of plots per hectare:         25
  Stochasticity:                       ON. Seed: 1608769807
+=============== Simulation Successful =====================
+Runtime: 459.152 seconds
